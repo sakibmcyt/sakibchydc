@@ -10,11 +10,12 @@
             --bg: #020408;
             --card-bg: rgba(255, 255, 255, 0.05);
             --stellar-gold: #ffcc00;
+            --glow: rgba(0, 242, 255, 0.3);
         }
 
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg);
             color: white;
             overflow-x: hidden;
@@ -24,76 +25,99 @@
         .stars-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.3; pointer-events: none; z-index: 0;
+            opacity: 0.4; pointer-events: none; z-index: 0;
         }
 
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 8%; background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            padding: 15px 8%; background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0, 242, 255, 0.2);
             position: sticky; top: 0; z-index: 100;
         }
-        .logo { font-size: 1.6rem; font-weight: bold; color: var(--primary); text-decoration: none; }
-        nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; transition: 0.3s; }
-        nav a:hover { color: var(--primary); }
+        .logo { font-size: 1.6rem; font-weight: bold; color: var(--primary); text-decoration: none; letter-spacing: 2px; }
+        nav div a { color: white; text-decoration: none; margin-left: 25px; font-size: 0.9rem; transition: 0.3s; opacity: 0.8; }
+        nav div a:hover { color: var(--primary); opacity: 1; }
 
-        .container { position: relative; z-index: 1; padding: 40px 8%; max-width: 1400px; margin: 0 auto; }
+        .container { position: relative; z-index: 1; padding: 40px 8%; max-width: 1300px; margin: 0 auto; }
 
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-size: 2.8rem; margin-bottom: 5px; letter-spacing: 4px; }
+        header { text-align: center; margin-bottom: 50px; }
+        header h1 { font-size: 3rem; margin-bottom: 5px; letter-spacing: 8px; text-transform: uppercase; color: white; text-shadow: 0 0 20px rgba(0,242,255,0.5); }
+        header p { color: var(--primary); letter-spacing: 3px; font-size: 0.8rem; opacity: 0.8; }
 
         .explorer-grid {
             display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 40px;
-            margin-top: 20px;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: center;
         }
 
         .visualizer {
-            background: var(--card-bg);
-            border-radius: 30px;
-            height: 550px;
+            background: radial-gradient(circle, rgba(0,242,255,0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
         }
 
         .planet-img {
-            width: 320px;
-            height: 320px;
+            width: 350px;
+            height: 350px;
             border-radius: 50%;
-            object-fit: contain; /* ছবি পুরোটা দেখানোর জন্য */
-            box-shadow: 0 0 60px rgba(0, 242, 255, 0.2);
-            transition: 0.8s ease;
+            object-fit: contain;
+            filter: drop-shadow(0 0 30px var(--glow));
+            animation: float 6s ease-in-out infinite;
+            transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
         }
 
         .info-panel {
-            background: rgba(0,0,0,0.7);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 242, 255, 0.3);
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .info-panel h3 { color: var(--primary); font-size: 2.2rem; margin: 0 0 15px 0; border-bottom: 2px solid var(--primary); display: inline-block; }
+        .info-panel h3 { color: var(--primary); font-size: 2.5rem; margin: 0 0 20px 0; font-weight: 300; letter-spacing: 3px; }
         
-        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
-        .spec-item { padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; }
-        .label { color: var(--stellar-gold); font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 4px; }
-        .value { font-size: 1rem; font-weight: bold; }
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .spec-item { 
+            padding: 15px; 
+            background: rgba(255,255,255,0.03); 
+            border-left: 3px solid var(--primary);
+            border-radius: 8px; 
+            transition: 0.3s;
+        }
+        .spec-item:hover { background: rgba(0,242,255,0.08); transform: translateX(5px); }
+        .label { color: var(--stellar-gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .value { font-size: 1.1rem; font-weight: 600; color: #fff; }
 
-        .description { line-height: 1.6; color: #ccc; margin-top: 25px; font-size: 0.95rem; font-style: italic; }
+        .description { line-height: 1.8; color: #b0b0b0; margin-top: 30px; font-size: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 
         .selection-menu {
-            display: flex; justify-content: center; gap: 10px; margin-top: 40px; flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 12px; margin-top: 60px; flex-wrap: wrap;
         }
         .p-btn {
-            padding: 12px 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-            color: white; border-radius: 12px; cursor: pointer; transition: 0.3s; font-size: 0.85rem;
+            padding: 12px 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: white; border-radius: 30px; cursor: pointer; transition: 0.4s; font-size: 0.9rem; letter-spacing: 1px;
         }
-        .p-btn:hover, .p-btn.active {
-            border-color: var(--primary); background: var(--primary); color: black; font-weight: bold;
+        .p-btn:hover { background: rgba(0, 242, 255, 0.2); border-color: var(--primary); }
+        .p-btn.active {
+            background: var(--primary); color: #000; font-weight: bold; box-shadow: 0 0 20px rgba(0,242,255,0.4);
+        }
+
+        @media (max-width: 968px) {
+            .explorer-grid { grid-template-columns: 1fr; }
+            .visualizer { height: 350px; }
+            .planet-img { width: 250px; height: 250px; }
         }
     </style>
 </head>
@@ -102,40 +126,39 @@
 <div class="stars-overlay"></div>
 
 <nav>
-    <a href="index.html" class="logo">SCIENCE WORLD</a>
+    <a href="#" class="logo">SCIENCE WORLD</a>
     <div>
-        <a href="index.html">Home</a>
-        <a href="physics.html">Physics</a>
-        <a href="chemistry.html">Chemistry Lab</a>
-        <a href="astronomy.html" style="color:var(--primary)">Astronomy</a>
+        <a href="#">Home</a>
+        <a href="#">Physics</a>
+        <a href="#">Chemistry</a>
+        <a href="#" style="color:var(--primary); opacity: 1;">Astronomy</a>
     </div>
 </nav>
 
 <div class="container">
     <header>
-        <h1>SOLAR SYSTEM EXPLORER</h1>
-        <p>WIKIPEDIA ENCYCLOPEDIC DATABASE</p>
+        <h1>Solar System</h1>
+        <p>EXPLORE THE COSMIC WONDERS</p>
     </header>
 
     <div class="explorer-grid">
         <div class="visualizer">
             <img id="main-planet-img" class="planet-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Planet">
-            <h2 id="planet-display-name" style="margin-top: 30px; letter-spacing: 6px; font-size: 2.2rem;">EARTH</h2>
+            <h2 id="planet-display-name" style="margin-top: 40px; letter-spacing: 10px; font-size: 1.8rem; font-weight: 300;">EARTH</h2>
         </div>
 
         <div class="info-panel">
             <h3 id="panel-title">Earth</h3>
             <div class="specs-grid">
                 <div class="spec-item"><span class="label">Distance from Sun</span><span class="value" id="dist">149.6M km</span></div>
-                <div class="spec-item"><span class="label">Avg Temp</span><span class="value" id="temp">15°C</span></div>
-                <div class="spec-item"><span class="label">Day length</span><span class="value" id="day">24 Hours</span></div>
+                <div class="spec-item"><span class="label">Average Temp</span><span class="value" id="temp">15°C</span></div>
+                <div class="spec-item"><span class="label">Length of Year</span><span class="value" id="year">365.2 Days</span></div>
                 <div class="spec-item"><span class="label">Gravity</span><span class="value" id="grav">9.8 m/s²</span></div>
+                <div class="spec-item"><span class="label">Main Atmosphere</span><span class="value" id="atmos">Nitrogen, Oxygen</span></div>
                 <div class="spec-item"><span class="label">Moons</span><span class="value" id="moons">1</span></div>
-                <div class="spec-item"><span class="label">Planet Type</span><span class="value" id="type">Terrestrial</span></div>
             </div>
             <p id="desc" class="description">
-                The Blue Marble. The only planet known to support life with vast liquid oceans covering 71% of its surface.
-            </p>
+                Our home is a vibrant, blue marble and the only known world capable of supporting life. Earth’s perfect distance from the Sun allows for liquid water to exist on its surface, while its nitrogen-oxygen atmosphere and protective magnetic field create a stable environment for a vast diversity of ecosystems to thrive.            </p>
         </div>
     </div>
 
@@ -150,68 +173,90 @@
         <button class="p-btn" onclick="updatePlanet('Neptune')">Neptune</button>
     </div>
 </div>
-
 <script>
     const planetDatabase = {
         'Mercury': {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mercury_in_true_color.jpg/600px-Mercury_in_true_color.jpg',
-            dist: '57.9M km', temp: '167°C', day: '58d 15h', grav: '3.7 m/s²', moons: '0', type: 'Terrestrial',
-            desc: 'The smallest planet and closest to the Sun. It has a cratered surface much like our Moon.'
+            dist: '57.9M km', temp: '167°C', year: '88 Days', grav: '3.7 m/s²', moons: '0', atmos: 'Thin Exosphere', glow: 'rgba(165, 165, 165, 0.4)',
+            desc: '​The smallest and innermost planet, Mercury is a sun-scorched world of extremes. Lacking a substantial atmosphere to trap heat, its surface temperatures fluctuate wildly between freezing nights and blistering days. Its cratered landscape closely resembles our Moon, serving as a silent record of billions of years of cosmic impacts.'
         },
         'Venus': {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Venus_from_Mariner_10.jpg/600px-Venus_from_Mariner_10.jpg',
-            dist: '108.2M km', temp: '464°C', day: '116d 18h', grav: '8.87 m/s²', moons: '0', type: 'Terrestrial',
-            desc: 'Earth\'s twin in size, but with a thick toxic atmosphere that makes it the hottest planet.'
+            dist: '108.2M km', temp: '464°C', year: '225 Days', grav: '8.87 m/s²', moons: '0', atmos: 'Carbon Dioxide', glow: 'rgba(255, 198, 107, 0.4)',
+            desc: 'Often called Earth’s twin due to its similar size, Venus is actually a hellish world of runaway greenhouse effects. It is the hottest planet in our solar system, wrapped in thick, toxic clouds of sulfuric acid that trap heat and create pressures strong enough to crush a submarine. Its surface is a volcanic landscape hidden beneath a permanent yellowish haze.'
         },
         'Earth': {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg',
-            dist: '149.6M km', temp: '15°C', day: '24 Hours', grav: '9.8 m/s²', moons: '1', type: 'Terrestrial',
-            desc: 'The only world in our solar system with liquid water and the only known world to harbor life.'
+            dist: '149.6M km', temp: '15°C', year: '365.2 Days', grav: '9.8 m/s²', moons: '1', atmos: 'Nitrogen, Oxygen', glow: 'rgba(0, 242, 255, 0.3)',
+            desc:'Our home is a vibrant, blue marble and the only known world capable of supporting life. Earth’s perfect distance from the Sun allows for liquid water to exist on its surface, while its nitrogen-oxygen atmosphere and protective magnetic field create a stable environment for a vast diversity of ecosystems to thrive.'
         },
         'Mars': {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/600px-OSIRIS_Mars_true_color.jpg',
-            dist: '227.9M km', temp: '-65°C', day: '24h 37m', grav: '3.71 m/s²', moons: '2', type: 'Terrestrial',
-            desc: 'The Red Planet. Home to the solar system\'s largest volcano, Olympus Mons.'
+            dist: '227.9M km', temp: '-65°C', year: '687 Days', grav: '3.71 m/s²', moons: '2', atmos: 'CO2, Nitrogen', glow: 'rgba(255, 77, 77, 0.4)',
+            desc: 'Known as the Red Planet due to iron oxide (rust) on its surface, Mars is a cold, desert world with a thin atmosphere. It is home to the largest volcano in the solar system, Olympus Mons, and deep canyons that suggest water once flowed across its dusty plains, making it the primary focus for future human exploration.'
         },
         'Jupiter': {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Jupiter.jpg/600px-Jupiter.jpg',
-            dist: '778.5M km', temp: '-110°C', day: '9h 56m', grav: '24.79 m/s²', moons: '79', type: 'Gas Giant',
-            desc: 'The largest planet. A gas giant with a Great Red Spot that is actually a massive storm.'
+            dist: '778.5M km', temp: '-110°C', year: '12 Years', grav: '24.79 m/s²', moons: '79', atmos: 'Hydrogen, Helium', glow: 'rgba(255, 184, 101, 0.3)',
+            desc: 'The king of the planets, Jupiter is a massive gas giant primarily composed of hydrogen and helium. It is famous for its Great Red Spot—a storm larger than Earth that has raged for centuries—and its powerful magnetic field. With dozens of moons and a faint ring system, it acts like a miniature solar system of its own.'
         },
         'Saturn': {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Saturn_during_Equinox.jpg/600px-Saturn_during_Equinox.jpg',
-            dist: '1.4B km', temp: '-140°C', day: '10h 42m', grav: '10.44 m/s²', moons: '82', type: 'Gas Giant',
-            desc: 'Famous for its complex ring system made of ice and rock particles.'
+            dist: '1.4B km', temp: '-140°C', year: '29 Years', grav: '10.44 m/s²', moons: '82', atmos: 'Hydrogen, Helium', glow: 'rgba(234, 214, 124, 0.3)',
+            desc: 'Saturn is most famous for its spectacular and complex ring system, made of billions of pieces of ice and rock. As the second-largest gas giant, it is so light and diffuse that it would theoretically float in water. It possesses a thick atmosphere and a massive collection of moons, including the cloud-covered Titan.'
         },
         'Uranus': {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Uranus2.jpg/600px-Uranus2.jpg',
-            dist: '2.9B km', temp: '-195°C', day: '17h 14m', grav: '8.69 m/s²', moons: '27', type: 'Ice Giant',
-            desc: 'An ice giant that tilted so far it actually orbits the Sun on its side.'
+            dist: '2.9B km', temp: '-195°C', year: '84 Years', grav: '8.69 m/s²', moons: '27', atmos: 'Hydrogen, Methane', glow: 'rgba(120, 255, 240, 0.3)',
+            desc: 'This "ice giant" is unique for its extreme tilt, rotating on its side as if it were a rolling ball. Uranus gets its pale blue-green color from methane gas in its atmosphere and is characterized by a cold, quiet exterior that hides a slushy interior of water, methane, and ammonia ices.'
         },
         'Neptune': {
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Neptune_Full.jpg/600px-Neptune_Full.jpg',
-            dist: '4.5B km', temp: '-201°C', day: '16h 6m', grav: '11.15 m/s²', moons: '14', type: 'Ice Giant',
-            desc: 'The windiest world. Dark, cold, and whipped by supersonic winds.'
+            // Updated Stable Link for Neptune
+            img: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Neptune_Full.jpg',
+            dist: '4.5B km', temp: '-201°C', year: '165 Years', grav: '11.15 m/s²', moons: '14', atmos: 'Hydrogen, Helium', glow: 'rgba(77, 102, 255, 0.5)',
+            desc: 'The most distant planet in our solar system, Neptune is a dark, cold world whipped by supersonic winds. This blue ice giant is nearly four times the size of Earth and features a "Great Dark Spot" similar to Jupiter’s storms. It is so far from the Sun that its "noon" looks like a dim twilight on Earth.'
         }
     };
 
     function updatePlanet(name) {
         const p = planetDatabase[name];
-        document.getElementById('main-planet-img').src = p.img;
+        const imgEl = document.getElementById('main-planet-img');
+        
+        // Image Fade Effect
+        imgEl.style.opacity = '0';
+        imgEl.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            imgEl.src = p.img;
+            // Dynamic Glow Change
+            imgEl.style.setProperty('--glow', p.glow);
+            imgEl.style.opacity = '1';
+            imgEl.style.transform = 'scale(1)';
+        }, 300);
+
+        // Update Text Info
         document.getElementById('planet-display-name').innerText = name.toUpperCase();
         document.getElementById('panel-title').innerText = name;
         document.getElementById('dist').innerText = p.dist;
         document.getElementById('temp').innerText = p.temp;
-        document.getElementById('day').innerText = p.day;
+        document.getElementById('year').innerText = p.year;
         document.getElementById('grav').innerText = p.grav;
         document.getElementById('moons').innerText = p.moons;
-        document.getElementById('type').innerText = p.type;
+        document.getElementById('atmos').innerText = p.atmos;
         document.getElementById('desc').innerText = p.desc;
 
+        // Button Active State Switch
         document.querySelectorAll('.p-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.innerText === name);
+            if(btn.innerText === name) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
         });
     }
+    
+    
+    
 </script>
 
 </body>
