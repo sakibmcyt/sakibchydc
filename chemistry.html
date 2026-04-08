@@ -143,24 +143,60 @@
         if(r === 'NaOH' || r === 'NH4OH') {
             p.style.height = '22%';
             if(salt.cat === 'Cu') {
-                if(r === 'NH4OH') { l.style.backgroundColor = '#0019ff'; p.style.height = '0'; addLog("Added NH₄OH: Deep blue complex. <b>Cu²⁺ Confirmed!</b>"); state.catFound = true; }
-                else { p.style.backgroundColor = '#87CEEB'; addLog("Added NaOH: Light blue ppt. <b>Possible Cu²⁺.</b>"); updateGuide("Confirm with <b>K₄[Fe(CN)₆]</b>."); }
-            } else if(salt.cat === 'Fe2') { p.style.backgroundColor = '#4F7942'; addLog("Added "+r+": Dirty green ppt. <b>Possible Fe²⁺.</b>"); updateGuide("Confirm with <b>K₄[Fe(CN)₆]</b>."); }
+                if(r === 'NH4OH') { 
+                    l.style.backgroundColor = '#0019ff'; p.style.height = '0'; 
+                    addLog("Added NH₄OH: Deep blue complex. <b>Possible Cu²⁺.</b>"); 
+                    updateGuide("Confirm with <b>K₄[Fe(CN)₆]</b>."); 
+                }
+                else { 
+                    p.style.backgroundColor = '#87CEEB'; 
+                    addLog("Added NaOH: Light blue ppt. <b>Possible Cu²⁺.</b>"); 
+                    updateGuide("Confirm with <b>K₄[Fe(CN)₆]</b>."); 
+                }
+            } 
+            else if(salt.cat === 'Ca') {
+                p.style.height = '0'; // Ca2+ doesn't react much with dil. NaOH
+                addLog("Added " + r + ": No significant reaction. <b>Possible Ca²⁺, Na⁺ or NH₄⁺.</b>");
+                updateGuide("Try <b>Oxalate</b> to check for Ca²⁺.");
+            }
+            else if(salt.cat === 'Al' || salt.cat === 'Zn') { 
+                p.style.backgroundColor = 'white'; 
+                addLog("Added " + r + ": White gelatinous ppt. <b>Possible Al³⁺ or Zn²⁺.</b>"); 
+                updateGuide("Confirm Zn²⁺ with <b>K₄[Fe(CN)₆]</b>. If no reaction, it's Al³⁺."); 
+            }
+            else if(salt.cat === 'Fe2') { p.style.backgroundColor = '#4F7942'; addLog("Added "+r+": Dirty green ppt. <b>Possible Fe²⁺.</b>"); updateGuide("Confirm with <b>K₄[Fe(CN)₆]</b>."); }
             else if(salt.cat === 'Fe3') { p.style.backgroundColor = '#8B4513'; addLog("Added "+r+": Red-brown ppt. <b>Possible Fe³⁺.</b>"); updateGuide("Confirm with <b>K₄[Fe(CN)₆]</b>."); }
-            else if(salt.cat === 'Al' || salt.cat === 'Zn' || salt.cat === 'Ca') { p.style.backgroundColor = 'white'; addLog("Added "+r+": White ppt. <b>Possible Al³⁺, Zn²⁺, or Ca²⁺.</b>"); updateGuide("Test with <b>Oxalate</b> for Ca²⁺ or <b>K₄[Fe(CN)₆]</b> for Zn²⁺."); }
             else { p.style.height = '0'; addLog("Added "+r+": No reaction. <b>Possible Na⁺ or NH₄⁺.</b>"); updateGuide("Try <b>Nessler's</b> or <b>K₂H₂Sb₂O₇</b>."); }
         }
         else if(r === 'K4FeCN6') {
             p.style.height = '25%';
-            if(salt.cat === 'Cu') { p.style.backgroundColor = '#7B3F00'; addLog("Added K₄[Fe(CN)₆]: Chocolate brown ppt. <b>Cu²⁺ Confirmed!</b>"); state.catFound = true; }
+            if(salt.cat === 'Cu') { 
+                p.style.backgroundColor = '#7B3F00'; 
+                addLog("Added K₄[Fe(CN)₆]: Chocolate brown ppt. <b>Cu²⁺ Confirmed!</b>"); 
+                state.catFound = true; 
+            }
+            else if(salt.cat === 'Zn') { 
+                p.style.backgroundColor = 'white'; 
+                addLog("Added K₄[Fe(CN)₆]: White ppt. <b>Zn²⁺ Confirmed!</b>"); 
+                state.catFound = true; 
+            }
+            else if(salt.cat === 'Al') {
+                p.style.height = '0';
+                addLog("Added K₄[Fe(CN)₆]: No reaction. <b>Al³⁺ Confirmed!</b>");
+                state.catFound = true;
+            }
             else if(salt.cat === 'Fe2') { p.style.backgroundColor = '#003399'; addLog("Added K₄[Fe(CN)₆]: Deep blue ppt. <b>Fe²⁺ Confirmed!</b>"); state.catFound = true; }
             else if(salt.cat === 'Fe3') { p.style.backgroundColor = '#000080'; addLog("Added K₄[Fe(CN)₆]: <b>Prussian Blue ppt. Fe³⁺ Confirmed!</b>"); state.catFound = true; }
-            else if(salt.cat === 'Zn') { p.style.backgroundColor = 'white'; addLog("Added K₄[Fe(CN)₆]: White ppt. <b>Zn²⁺ Confirmed!</b>"); state.catFound = true; }
             else { addLog("No specific reaction."); }
         }
+        else if(r === 'NH4C2O4' && salt.cat === 'Ca') { 
+            p.style.height = '25%'; p.style.backgroundColor = 'white'; 
+            addLog("Added Oxalate: White crystalline ppt. <b>Ca²⁺ Confirmed!</b>"); 
+            state.catFound = true; 
+        }
+        // ... (AgNO3, BaNO3, and HCl logic remains the same)
         else if(r === 'Nessler' && salt.cat === 'NH4') { p.style.height = '25%'; p.style.backgroundColor = '#804000'; addLog("Added Nessler's: Red-brown ppt. <b>NH₄⁺ Confirmed!</b>"); state.catFound = true; }
         else if(r === 'K2H2Sb2O7' && salt.cat === 'Na') { p.style.height = '25%'; p.style.backgroundColor = 'white'; addLog("Added K₂H₂Sb₂O₇: White ppt. <b>Na⁺ Confirmed!</b>"); state.catFound = true; }
-        else if(r === 'NH4C2O4' && salt.cat === 'Ca') { p.style.height = '25%'; p.style.backgroundColor = 'white'; addLog("Added Oxalate: White crystalline ppt. <b>Ca²⁺ Confirmed!</b>"); state.catFound = true; }
         
         else if(r === 'AgNO3') {
             if(salt.ani === 'Cl') { p.style.height = '25%'; p.style.backgroundColor = 'white'; addLog("Added AgNO₃: Curdy white ppt. <b>Cl⁻ Confirmed!</b>"); state.aniFound = true; }
